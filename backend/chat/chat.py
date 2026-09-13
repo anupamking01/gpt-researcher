@@ -172,9 +172,15 @@ class ChatAgentWithMemory:
             
             return results
         except Exception as e:
-            logger.error(f"Error performing web search: {str(e)}", exc_info=True)
+            error = str(e)
+            logger.error(f"Error performing web search: {error}", exc_info=True)
+            self.search_metadata = {
+                "query": query,
+                "sources": [],
+                "error": error,
+            }
             return {
-                "error": str(e),
+                "error": error,
                 "results": []
             }
 
